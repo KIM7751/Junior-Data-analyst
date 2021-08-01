@@ -1,1 +1,1 @@
-"# Junior-Data-analyst" 
+# Junior-Data-analyst 
