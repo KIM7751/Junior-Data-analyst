@@ -8,8 +8,10 @@ Hyper text Markup Language (HTML) is the standard markup Language for <strong>cr
 <!-- <u> underline의 줄임말로 밑줄로 강조함 -->
 Hyper text Markup Language (HTML) is the standard markup Language for <strong>creating <u>web</u> pages</strong> and web applications.
 
-<!-- 옷에 있는 tag는 옷의 성질을 간단히 설명함
- HTML에서 tag를 이용해 문법을 비유적으로 사용하고자 함 -->
+<!-- 
+    옷에 있는 tag는 옷의 성질을 간단히 설명함
+    HTML에서 tag를 이용해 문법을 비유적으로 사용하고자 함 
+                                                        -->
 
 
  <h1>This is heading 1 </h1>
@@ -20,15 +22,73 @@ Hyper text Markup Language (HTML) is the standard markup Language for <strong>cr
  <h6>This is heading 6 </h6>
 
 
-<!-- h1 ~ h6 
-제목을 나타내는 tag
-자동으로 줄 바꿈이 이뤄짐
-굵은 글씨로 표현 
-숫자가 커질수록 글자가 작아짐 -->
+<!-- 
+    h1 ~ h6 
+    제목을 나타내는 tag
+    자동으로 줄 바꿈이 이뤄짐
+    굵은 글씨로 표현 
+    숫자가 커질수록 글자가 작아짐 
+                                -->
 
 <h1>HTML</h1>
 
-<!-- tag의 개수는 150이상이 있음
-하지만 우리가 모두 외워야 할 필요가 없음
-우리는 통계에 기반에 제일 많이 쓰이는 tag를 공부하면 됨 
-모르는 tag는 현시대 인터넷 검색만으로 충분히 활용 가능 -->
+<!-- 
+    tag의 개수는 150이상이 있음
+    하지만 우리가 모두 외워야 할 필요가 없음
+    우리는 통계에 기반에 제일 많이 쓰이는 tag를 공부하면 됨 
+    모르는 tag는 현시대 인터넷 검색만으로 충분히 활용 가능 
+                                                        -->
+
+
+
+<!-- 줄 바꿈 <br> -->
+
+Hyper text Markup Language (HTML) is the standard markup Language for <strong>creating web pages</strong> and web applications.<br><br><br>Hyper text Markup Language (HTML) is the standard markup Language for <strong>creating <u>web</u> pages</strong> and web applications.
+
+<!--    
+    br 태그는 줄바꿈이라는 시각적인 의미를 부여하기 때문에 
+    닫는 태그가 따로 없음. 
+                                                        -->
+
+
+<!-- 단락 설정 태그 <p></p> -->
+
+<p>Hyper text Markup Language (HTML) is the standard markup Language for <strong>creating web pages</strong> and web applications.</p><p>Hyper text Markup Language (HTML) is the standard markup Language for <strong>creating <u>web</u> pages</strong> and web applications.</p>
+
+<!-- 
+    결과는 같지만 하지만 사용하는 태그는 다르고 
+    이 맥락에서 p 태그를 쓰는게 더 좋음.
+
+    1. <br> 태그는 닫는게 따로 없고 여백의 정도 조절 가능
+    2. <p> 태그는 정해진 여백이 있어 수정 불가
+    3. 이때 CSS를 활용해 <p> 태그의 속성값을 넣어줌
+    4. <p> 태그는 일정 구간 같은 단락임을 보여주고 CSS를 통해
+        섬세하게 여백 조절이 가능함  
+                                                        -->
+
+
+<p>Hyper text Markup Language (HTML) is the standard markup Language for <strong>creating web pages</strong> and web applications.</p><p style="margin-top: 45px;">Hyper text Markup Language (HTML) is the standard markup Language for <strong>creating <u>web</u> pages</strong> and web applications.</p>
+
+
+<!-- 
+    검색엔진은  웹페이지를 찾을때 소스안에 tag를 분석해 찾음
+    만약 같은 문자라고 해도 <h3>를 쓴 웹페이지와 
+    시각적으로 제목으로 보이게끔 <>를 이용한 웹페이지 중 어떤   것이 눈에 잘 띄게 될까?
+
+    정답은 바로 <h3>를 이용해 코딩한 웹페이지이다 
+                                                    -->
+
+
+<!-- 이미지 웹페이지 포함 <img> -->
+<!-- tag를 보충하는 속성(attribute) -->
+
+<p>Hyper text Markup Language (HTML) is the standard markup Language for <strong>creating web pages</strong> and web applications.
+<img src = "coding.jpg" width="100%">
+</p>
+<p style="margin-top: 45px;">Hyper text Markup Language (HTML) is the standard markup Language for <strong>creating <u>web</u> pages</strong> and web applications.</p>
+
+<!-- 
+    1.속성값의 위치는 서로 바뀌어도됨
+    2.이름만으로 정보가 부족해 속성을 통해 많은 의미 부가
+    3. src = source, width = 이미지 크기 설정 
+                                                    -->
