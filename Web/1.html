@@ -7,12 +7,12 @@ Hyper text Markup Language (HTML) is the standard markup Language for <strong>cr
 
 <!-- <u> underline의 줄임말로 밑줄로 강조함 -->
 Hyper text Markup Language (HTML) is the standard markup Language for <strong>creating <u>web</u> pages</strong> and web applications.
------------------------------------------------------
+
 <!-- 
     옷에 있는 tag는 옷의 성질을 간단히 설명함
     HTML에서 tag를 이용해 문법을 비유적으로 사용하고자 함 
                                                         -->
-
+-----------------------------------------------------
 
  <h1>This is heading 1 </h1>
  <h2>This is heading 2 </h2>
@@ -29,7 +29,6 @@ Hyper text Markup Language (HTML) is the standard markup Language for <strong>cr
     굵은 글씨로 표현 
     숫자가 커질수록 글자가 작아짐 
                                 -->
------------------------------------------------------
 <h1>HTML</h1>
 
 <!-- 
@@ -39,7 +38,7 @@ Hyper text Markup Language (HTML) is the standard markup Language for <strong>cr
     모르는 tag는 현시대 인터넷 검색만으로 충분히 활용 가능 
                                                         -->
 
-
+-----------------------------------------------------
 
 <!-- 줄 바꿈 <br> -->
 
@@ -123,4 +122,57 @@ Hyper text Markup Language (HTML) is the standard markup Language for <strong>cr
 
 -----------------------------------------------------
 
-<!-- 문서의 구조와  -->
+<!-- 문서의 구조와 슈퍼스타들(빈도수 TOP 5) -->
+<!doctype html>
+<html>
+<head>
+<title>WEB1 - html</title>
+<meta charset = "utf-8">
+</head>
+<!-- <title> 웹페지의 제목을 사용자에게 명시적으로 알려주고
+     책표지와 같은 역할을 수행함
+     <meta> 웹페이지를 오픈할때 특정 인코딩 방식을 선언 
+     <body> 본문은 body라는 태그로 묶기로함
+     <head> 본문을 설명하는 태그는 head 태그로 묶기로함
+     
+        1.모든 태그는 head와 body로 나눠지고 상위 태그
+        2.보다 상위태그 html 태그를 붙임 
+        3.관용적인 표현으로 <!doctype html>을 붙여 html 명시
+                                                        -->
+
+     <body>
+     <ol>
+        <li>HTML</li>
+        <li>CSS</li>
+        <li>JavaScript</li>
+    </ol>
+    <h1>HTML이란 무엇인가?</h1>
+    </body>
+</html>
+
+-------------------------------------------------------
+
+<!-- html 태그의 제왕 -->
+<!-- html specification = 설명서 -->
+<!-- anchor 정박하다 <a> 태그
+     hypertext 링크 첫글자 h, reference ref = href 링크가 걸림
+     target = "_blank" 새 탭으로 open
+     title = 링크를 클릭하기 전 툴팁으로 어떤 링크인지 설명 -->
+<!doctype html>
+<html>
+    <head>
+        <title>web1 - html</title>
+        <meta charset="utf-8">
+    </head>
+ 
+    <body>
+        <ol>
+            <li>HTML</li>
+            <li>CSS</li>
+            <li>JavaScript</li>
+        </ol>
+        <h1>HTML</h1>
+        <p><a href="https://www.w3.org/TR/html52/"
+            target="_blank" title="html5 specification">Hyper text Markup Language (HTML)</a> is the standard markup Language for <strong>creating <u>web</u>pages</strong> and web applications.</p><p style="margin-top: 45px;">Hyper text Markup Language (HTML) is the standard markup Language for <strong>creating <u>web</u> pages</strong> and web applications.</p>
+    </body>
+</html>
