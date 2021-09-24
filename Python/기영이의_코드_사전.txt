@@ -1,5 +1,98 @@
 기영이의 파이썬 코드 사전
 
+- Matplotlib 그래프 
+
+    -> ax.plot 함수를 두 번 호출시 다시 말에 하나의 ax에 여러 번 그래프를 그리면 그래프를 겹쳐서 그릴 수 있음
+
+    -> line plot 
+        
+        fig, ax = plt. subplots ( ) -- 괄호 안이 공란일 경우 1개 표시
+
+        x = np.arange(15)
+
+        y = x ** 2                    -- x의 제곱을 의미 
+
+       ax.plot(
+	x,  y,
+             linestyle = " : "        -- 점선                   (- 직선) (-- 점선) (-. 점과 선이 섞인 선) 
+             marker = " * "         -- 지점 별 모양         (. 점) (o 원) (v 역삼각형) (s 네모)
+             color = "524FA1"      -- 색깔 지정            (r 빨강) (g 초록) (0.8 0 ~ 1 사이의 투명도, 회색)
+        )
+
+     -> 축 경계 조정
+
+         x = np.linespace(0, 10, 1000) -- start, end, step
+
+         fig, ax = plt.subplots( )
+
+         ax.plot(x, np.sin())               -- 사인 그래프
+
+         ax.set_xlim(-2, 12)               -- x축 범위
+
+         ax.set_ylim(-1.5, 1.5)            -- y축 범위
+
+     -> 범례
+
+         x = np.arange(10)
+
+         fig, ax = plt.subplots( )
+
+         ax.plot(x, x, label = 'y=x')
+
+         ax.plot(x, x**2, label = 'y=x^2')
+
+         ax.set_xlabel('x')
+
+         ax.set_ylabel('y')
+
+         ax.legend(loc = 'upper right',     -- 범례 표시, location 위치 - 우측 상단
+	         shadow = True,          -- 그림자 표시
+	         fancybox = True,        -- 범례 상자 모서리 둥글게 표시
+	         borderpad = 2)          -- 범례 내부 상자 크기 
+
+      
+      -> Bar plot
+
+         x = np.arange(10)
+
+         fig, ax = plt.subplots(figsize = (12, 4))   -- 가로 12, 세로 4
+
+         ax.bar(x, x*2)
+
+      -> Omit Bar plot
+
+         x = np.random.rand(3)  -- 0 ~ 1 사이의 랜덤값
+
+         y = np.random.rand(3)
+
+         z = np.random.rand(3)
+
+         data = [x, y, z]
+
+         fig, ax = plt.subplots( ) 
+
+         x_ax = np.arange(3)  -- 0, 1, 2
+
+         for i in x_ax : 
+	ax.bar(x_ax, data[ i ], bottom = np.sum(data[ : i ], axis = 0))  -- x축, y축, 바닥부터 쌓아올림
+
+         ax.set_xticks(x_ax)   -- x 축 설정
+    
+         ax.set_xtickslabels(["A", "B", "C"])   -- x 축 라벨링
+
+      -> Histogram
+
+         fig, ax = plt.subplots( )
+
+         data = np.random.randn(1000) -- 1000개의 랜덤한 숫자 추출
+
+         ax.hist(data, bins = 50) -- 1000개의 데이터를 50개의 막대로 나타냄
+
+        
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+
 - Pandas : 파이썬 라이브러리, 구조화된 데이터를 효과적으로 처리하고 저장, Array 계산에 특화된 NumPy를 기반으로 설계
 
     -> Series - Numpy의 array가 보강된 형태 Data와 index를 가지고 있음, dtype 인자로 데이터 타입을 지정할 수 있음(dtype = float, int ..), 인덱스 지정, 접근 가능,
@@ -26,7 +119,9 @@
     -> df.groupby('key').apply(lambda x : x.max( ) - x.min( )) - groupby를 통해서 묶인 데이터에 함수 적용 
 
     -> df.groupby('시도').get_group('충남') - '시도'로 데이터를 그룹화하고 '충남' 데이터만 불러오겠다 
+
 -------------------------------------------------------------------------------------------------------------------------------
+
 
 - NumPy : 수치적 파이썬, 대규모(많은) 다차원(2차원이상) 배열(데이터 나열)을 다룰 수 있게 도와주는 라이브러리
 
