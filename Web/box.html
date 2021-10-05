@@ -1,0 +1,53 @@
+<!Doctype html>
+<html>
+    <head>
+        <meta charset = "utf-8">
+        <title></title>
+        <style>
+            /* 중복 값 발생
+            block level element = element tag
+            h1 display default = block
+            
+            h1 {
+                border-width: 5px;   
+                border-color: red;
+                border-style: solid;
+            }
+
+            
+            inline element
+            a display default = inline
+            
+
+            a {
+                border-width: 5px;   
+                border-color: red;
+                border-style: solid;
+            }
+            */
+
+            /* 중복 값 발생, 제거
+            h1, a {
+                border-width: 5px;
+                border-color: red;
+                border-style: solid;
+            }
+            */
+
+            h1 {
+                border: 5px red solid ;
+                padding: 20px ;
+                margin: 20px;
+                display: block;
+                width: 100px;
+                
+            }
+        </style>
+    </head>
+    <body>
+        <h1>CSS</h1>
+        <h1>CSS</h1>
+        
+        <!-- Cascading Style Sheets (<a href = "https: // en.wikipedia.org/wiki/Cascading Style Sheets">CSS</a>) is a style sheet language used for describing the presentation of a document written in a markup language such as HTML.[1] CSS is a cornerstone technology of the World Wide Web, alongside HTML and JavaScript. -->
+    </body>
+</html>
