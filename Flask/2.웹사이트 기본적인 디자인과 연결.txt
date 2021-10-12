@@ -1,0 +1,31 @@
+1. 노션에서 로그인 후 새로운 페이지를 생성
+
+2. 새로운 페이지에 적당한 문구를 작성하여 오른쪽 상단을 클릭한 후 내보내기 -> HTML 선택 -> 저장 공간 선택 -> 압축 풀기
+
+3. 해당 HTML의 형식을 조회하기 위해 VSC를 이용해 열어보면 볼 수 있음 
+
+4. 전부 복사하여 templets 하위에 hello.html 코드를 붙여 넣음 
+
+5. 그 후 최하위에 2번에서 적었던 적당한 문구였던 집 등록하기, 등록한 집 목록 보기 텍스트에 
+
+6. 각각 <a href = "/apply"> 집등록하기 <a> .... <a href = "/list"> 등록한 집 목록 보기 <a> 하이퍼링크 처리함
+
+7. 그리고 flask 운용 초기 페이지에 다음과 같이 작성
+				
+				 @application.route("/apply")
+				  def apply():
+    				       return render_template("apply.html")
+ 				
+				@application.route("/list")
+				  def list():
+    				       return render_template("list.html")
+
+8. 노션에서 하이퍼링크에 페이지가 될 apply.html, list.html을 각각 만들어 줌
+
+9. 3, 4번 과정을 반복한 후에 함수이름 각각을 맞춰주면 코드의 가독성이 좋음
+
+10. 열려 있던 기존의 홈페이지를 보면 바뀐게 없음
+
+11. 터미널은 리눅스 명령어로 ctrl + c 를누르면 서버가 종료가 됨
+
+12. 새로 python3 application.py를 입력하면 우리가 만든 페이지가 조회 됨
