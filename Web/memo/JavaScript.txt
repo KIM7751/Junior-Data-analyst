@@ -1,0 +1,40 @@
+JavaScript 입문
+
+1. HTML을 이용해서 웹페이지를 만든 후에, JavaScript를 이용해 사용자와 상호작용할 수 있도록 기능을 추가
+
+2. HTML이 정보라는 멈춰 있는 이미지를 그리는 것이라면 JavaScript는 그 이미지를 영화처럼 움직이게 함
+
+3. JavaScript 최종 목표를 주간, 야간 모드로 전환이 가능하도록 만들 것임
+
+4. <input type = "button" value = "night" 타입과 벨류를 이렇게 작성했을때 night라는 버튼이 생김
+
+5. <input type = "button" value = "night" onclick " ~ " 온클릭이라는 속성의 값은 자바스크립트가 와야한다는 규칙이 있음
+
+6. 온클릭은 해당 버튼을 클릭했을 때 JavaScript 코드를 실행시킬 것입니다라고 이야기할 수 있음
+
+7. 정리하자면 JavaScript는 사용자와 상호작용하는 언어이다, 웹브라우저는 한번 화면에 출력되면 자기자신을 바꿀 수 없다
+
+8. JavaScript를 이용하면 JavaScript 코드에 따라 정적인 부분을 개선할 수 있음
+
+------------------------------------------------------------------------------------------------
+
+HTML과 JavaScript의 만남1 (script tag)
+
+1. 기본적으로 JavaScript는 HTML 위에서 동작하는 언어임
+
+2. 어떻게 하면 HTML이라는 컴퓨터 언어에 완전히 다른 문법을 가진 JavaScript를 넣을까?
+
+3. JavaScript를 넣는 방법은 우선 웹브라우저한테 HTML의 코드로 지금부터 JavaScript가 시작됩니다라고 알려줘야함
+
+4. <script> tag 안쪽에 JavaScript가 오도록 약속되어 있기 때문에 안쪽에 있는 코드를 JavaScript로 해석함
+
+5. <script> document.write('hello world'); 화면 출력됨을 알 수 있음
+
+6. hello word를 직접 작성해서 화면 출력하는 것과 어떤 부분에서 차이가 나는지 의문이 듦
+
+7. 차이가 확연히 나게하는 방법으로는 1+1을 입력해보면 되는데 직접 작성했을 때 1+1이 정적인 상태로 그대로 출력됨
+
+8. 하지만 JavaScript로 작성한 1+1은 계산기와 같은 결과값으로 2라는 출력값을 보임
+
+9. 웹페이지에 JavaScript를 글씨로 출력할 때는 document.write를 쓴다고 알아두자
+

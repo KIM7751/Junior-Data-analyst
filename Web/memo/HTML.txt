@@ -1,0 +1,35 @@
+HTML TAG
+
+1. <strong></strong> 글씨 강조
+
+2. <u></u> 밑줄 글씨 강조
+
+3. <h1 ~ h6> 제목 tag
+
+4. <br> 시각적 여백 효과, 줄바꿈이라는 시각적인 의미만을 부여 닫는 tag 없음
+
+5. <img> 이미지 웹페이지 추가, 
+	 tag를 보충하는 속성(attribute) <img src(=source), width>
+
+6.  <p></p> 단락 설정, 닫는 tag가 존재 정해진 여백이 있음,
+	     CSS 활용해 정교한 수정 가능
+
+7. <li></li> 목록을 구성하는 자식 tag(list)
+
+8. <ul></ul> 목록을 구분 짓는 부모 tag,  unordered list 
+
+9. <ol> </ol> 목록을 구분 짓는 부모 tag,  ordered list 
+
+10. <title> 웹페이지 제목, 문서의 구조를 나타냄
+
+11. <meta charset> 인코딩 형식, 문서의 구조를 나타냄
+
+12. <head> 본문을 설명
+
+13. <body> 본문을 나타냄  
+
+14. <html> tag를 전체로 묶는 최고 태그
+
+15. <a> html tag의 꽃, 참조 속성 href =, 
+           target='_blank' 새로운 웹페이지에서 오픈,
+           링크 부가 설명 title =
