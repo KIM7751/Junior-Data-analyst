@@ -168,7 +168,60 @@ JavaScript 데이터 타입
 
 7. 하지만 자바스크립트를 이용하면 night/day 버튼을 클릭했을 때 마다 body 태그 안의 속성이 유기적으로 바뀜
 
-8. 이를 구현하기 위해선 첫번째로 stye에 들어가는 속성의 값 CSS
+8. 이를 구현하기 위해선 첫번째로 style에 들어가는 속성의 값 CSS
 
 9. 두번째로 CSS 속성을 주고자하는 태그가 누구인지 웹 브라우저에 알려주는 자바스크립트 문법을 알아야함 
+
+------------------------------------------------------------------------------------------------
+
+제어할 태그 선택하기 
+
+1. 우리가 달성해야할 목표는 주/야간 모드를 전환하는 프로세스임
+
+2. 이 목적을 지금 부터 달성하기 위해 접근해보고자 함
+
+3. 버튼부터 만들어보자
+
+	<input type="button" value="day">
+
+	<input type="button" value="night">
+
+4. 버튼을 클릭했을 때 이벤트가 필요한데 onclick에 JS 코드를 넣으면 됨
+
+5. 구체적으로 버튼을 클릭했을 때 body 태그의 style 속성을 동적으로, 프로그래밍적으로, 상호작용에 의해 넣으려함
+
+6. JS 문법에 따라 웹 브라우저에게 body를 선택하게 끔 해야함
+
+7. javascript select tag by css selector 검색, css 선택자는 크게 세 가지 class, id, tag 선택자가 있음
+
+	document.querySelector ~ 
+
+8. query는 웹 브라우저에 질의한다라고 이해하면 쉬움 
+	
+9. 우리가 발생 시킬 이벤트가 해당하는 태그가 body이므로 태그 선택자 "body"삽입
+
+	document.querySelector("body")
+
+10. 다음 과제는 우리가 body 태그의 style 속성을 어떻게 JS로 넣을 수 있는가 알아봐야함
+
+11. javascript elemety style 검색 
+
+	style = element.style
+
+	document.querySelector("body").style
+
+12. javascript style back ground 검색
+
+	<~ style = "background-color:black;">
+
+	document.body.style.backgroundColor = "black";
+
+13. 위에서 확인할 수 있는 점으로 css 문법과 js 문법간에 표기 방법 또한 다른것을 확인할 수 있음
+
+14. 이번 시간에는 제어할 태그를 선택하는 JS문법에 대해서 배움
+
+	
+
+
+
 
