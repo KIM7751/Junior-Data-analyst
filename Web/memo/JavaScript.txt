@@ -327,6 +327,90 @@ JavaScript 데이터 타입
 
 12. 이 얘기 자체로는 쓸 수 있는게 아무 것도 없지만 조건문, 반복문을 통해 불리언이라는 것이 얼마나 혁명적인 것인지 알 수 있음 
 
+------------------------------------------------------------------------------------------------
+
+조건문 예제
+
+1. ex5.html을 이용해서 실습을 진행
+2. html의 기본 세팅(! + tab)후 코드 입력
+
+	<body>
+
+  	<h1>Conditional statements</h1>
+
+  	<h2>Program</h2>
+
+  	<script>
+
+	    document.write("1<br>");
+
+	    document.write("2<br>");
+
+	    document.write("3<br>");
+
+	    document.write("4<br>");
+
+	</script>
+
+
+
+  	<h2>IF-true</h2>
+
+  	<script>
+
+	    document.write("1<br>");
+
+	    if(true) {
+
+	    document.write("2<br>");
+
+	    } else {
+
+	    document.write("3<br>");
+
+	    }
+
+	    document.write("4<br>");
+
+	</script>
+
+
+
+	<h2>IF-false</h2>
+
+  	<script>
+
+	    document.write("1<br>");
+
+	    if(false) {
+
+	    document.write("2<br>");
+
+	    } else {
+
+	    document.write("3<br>");
+
+	    }
+
+	    document.write("4<br>");
+
+	  </script>
+
+	</body>
+
+3. 웹 페이지를 실행해보면 조건문 불리언 값에 따라 출력된 값이 다르다는 것 확인 가능
+
+4. 즉 if 문 뒤에 따라오는 괄호 안에는 불리언 데이터 타입이 옴
+
+5. true면 첫번재 중괄호에 잇는 녀석들이 실행되고 else 중괄호는 무시
+
+6. false면 첫번째 중괄호는 무시하고 else 중괄호가 실행됨 
+
+7. 우리가 작성한 코드의 조건에는 직접 불리언을 적었기 때문에 쓸모 없는 코드임
+
+8. 이유는 조건에 따라 실행되는 코드가 달라지지 않기 때문임
+
+
 
 	
 
