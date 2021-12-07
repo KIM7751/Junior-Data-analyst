@@ -112,5 +112,216 @@
 
 	        마냥 깊게만 만들 수 없음 
 
+-----------------------------------------------------------------------------------------------------------------------------------
+
+딥러닝 모델의 학습 방법
+
+- 딥러닝 모델이란 ? : 히든층이 많아진다면 깊은 신경망이라는 의미의 Deep Learning 단어 사용
+
+- 딥러닝 모델의 구성 요소
+
+	1) Node/Unit(노드/유닛) : 각 층을 구성하는 요소
+
+	2) Weight(가중치) : 노드간의 연결강도
+
+	3) Layer(레이어) : 모델을 구성하는 층
+
+		i) Hidden Layer(히든 레이어) : 입력단과 출력단 사이에 위치한 레이어
+
+
+- 어떻게 학습하는가 ? : 예측값과 실제값 간의 오차값을 최소화하기 위해 오차값을 최소화하는 모델의 인자를 찾는 알고리즘 적용
+		
+		    = 손실 함수를 최소화하는 가중치를 찾기 위해 최적화 알고리즘을 적용
+
+	1) 딥러닝 모델이 예측값 구하는 방식
+
+		x1, x2 두개의 입력 노드에서 들어오는 값을 기준으로 1번째 히든 레이어에서 1, 2번째 퍼셉트론에서 계산해 출력값 도출   
+
+		1번째 히든 레이어의 1, 2번째 출력값을 2번째 히든레이어의 1,2번째 퍼셉트론에 넣어 최종 최종 출력 값이 도출 
+
+		-> 입력값을 바탕으로 출력값을 계산하는 이 과정을 "순전파(Forward propagation)" 라고 함, 최종적인 예측값을 구할 수 있음
+
+		ex) [ x1=1, x2=-1, w1=2, w2=1, w0=0 ] [ w3=1, w4=-1] 
+
+		      ∑ = w1x1 + w2x2 + w0 = 1
+
+		      activation function(x) = 0.73 
+
+		      	※ activation function은 위에서 배운대로하면 0, 1이 나와야하는데 소수점이 나옴 -> 다른 종류의 activation function이기 때문임 
+
+		         	우리가 배웠던 activation function은 "계단 모형"의 step function이라고 불림, 이 말고도 sigmoid, tanzent, relu 등이 있음	 
+
+		          	언제 어떤 activation function을 쓰냐는 추후에 배우기로하고 "딥러닝 모델에 따라서 적절한 activation function을 써야함"
+		
+		
+		      ★ 1번째 히든 레이어의 1, 2번째 출력값		
+
+		      activation function(x) = 0.73
+
+		      activation function(x) = 0.5
+
+		
+		      ☆ 2번째 히든 레이어에 입력
+		
+		      ∑ = 1*0.73 + -1*0.5 + w0 = 0.23
+
+		      activation function(x) = 0.55
+
+	                   예측값과 실제값 간의 오차값을 구해 손실함수를 구함, 오차값이 낮으면 손실함수값이 낮아짐
+			
+
+	2) 손실함수 최적화하는 경사하강법
+
+		가중치는 gradient값을 사용하여 업데이트를 수행, gradient값은 각 가중치 마다 정해지며 역전파(Backpropogation)를 통해 구할 수 있음
+
+		gradient값은 한번에 정해지지 않아 사용되는 방법이 역전파이며 결론적으로 output 가중치의 gredient를 구하고 역순으로 각 가중치의 gradient값을 계산
+
+		편미분이 필요
+
+
+	3) 정리
+
+		i) 학습용 feature 데이터를 입력하여 예측값 구하기(순전파)
+
+		ii) 예측값과 실제값 사이의 오차 구하기(손실함수 계산)
+
+		iii) 손실함수를 줄일 수 있는 가중치 업데이트(역전파)
+
+		iv) 위 과정 반복으로 손실함수 최소로 하는 가중치 얻기
+
+-----------------------------------------------------------------------------------------------------------------------------------
+
+텐서플로우
+
+- 유연하고, 효율적이며, 확장성 있는 딥러닝 프레임워크
+
+- 대형 클러스터 컴퓨터부터 스마트폰까지 다양한 디바이스에서 동작 가능\
+
+- 딥러닝 모델 구현 순서
+
+	i) 데이터 전처리
+
+		※ 상식 : 1차원 = vector, 2차원 = matrix, 3차원 ~ = tensor		
+
+		ㄱ) 텐서플로우 딥러닝 모델은 Tensor 형태의 데이터를 입력 받음, Tensor란 다차원 배열로서 텐서플로우에서 사용하는 객체
+
+		     pandas, numpy -> tensor 형태 데이터 변환 tf.data.Dataset.from_tensor_slices((featuer.values, label.values))
+										    "배열"
+
+		ㄴ) 딥러닝에 사용하는 데이터는 추가적인 전 처리 작업이 필요 -> Epoch, Bach
+
+		     Epoch : 한 번의 epoch는 전체 데이터 셋에 대해 한 번 학습을 완료한 상태
+
+		     Batch : 나눠진 데이터 셋, 사이즈만큼 나누게 되고 보통 mini-bach라고 표현함 .batch(batch size)
+
+			  딥러닝 학습 과정에서 수많은 가중치 w를 업데이트 해야함, 전체 epoch을 넣는게 아닌 일부만 넣어보자에서 생긴 개념이 batch
+		
+			  한 epoch을 넣어 업데이트 하는 것 보다는 성능이 안 좋을 수 있지만 계산적으로는 훨씬 빠름
+
+		     iteration : epoch을 나눠서 실행하는 횟수를 의미
+
+		ex) 총 데이터가 1000개, batch size = 100
+
+		     1 iteration = 100개 데이터에 대해서 학습
+
+		     1 epoch = 1000/batch size = 10 iteration
+
+
+	ii) 딥러닝 모델 구축
+
+		ㄱ) Keras 텐서플로우의 패키지로 제공되는 고수준 API, 딥러닝 모델을 간단하고 빠르게 구현 가능
+
+			a) keras 메소드 (1) 
+
+				모델 클래스 객체 성성 : tf.keras.models.Sequential( ), 쉽게 말하면 딥러닝 모델을 만들 것이다 선언 = 흰 도화지 설정
+
+				모델의 각 Layer 구성 : tf.keras.layers.Dense(units, activation), 흰 도화지에 레이어를 설계하고 만드는 과정
+
+					units : 레이어 안의 node 수 , activation : 적용할 수 있는 activation 함수 설정
+
+
+			b) input Layer 입력 형태 지정
+
+				첫 번째 즉, input Layer는 입력 형태에 대한 정보를 필요로 함 input_shape, input_dim 인자 설정
+
+			
+				ex) model = tf.keras.models.Sequential([
+					tf.keras.layers.Dense(10, input_dim=2, activation='sigmoid'), # 2개의 입력 변수, 10개의 노드, sigmoid
+					tf.keras.layers.Dense(10, activation='sigmoid'), # 10개의 노드, 2번째 층
+					tf.keras.layers.Dense(1, activation='sigmoid') # 1개의 노드, 3번째 층, 하나로 모여 값이 하나가 됨
+			          		])
+
+			 			입력 2, 출력 1, Hidden Layer 2
+
+			
+			
+			c) keras 메소드 (2)
+
+				모델에 Layer 추가하기
+
+					[model].add(tf.keras.layers.Dense(units, activation))
+
+				ex) model = tf.keras.models.Sequential( )
+					
+				     model.add(tf.keras.layers.Dense(10, input_dim=2, activation='sogmoid'))
+				     model.add(tf.keras.layers.Dense(10, activation='sigmoid')) 
+				     model.add(tf.keras.layers.Dense(1, activation='sigmoid'))
+		
+
+	iii) 모델 학습시키기
+
+		ㄱ) 모델 학습 방식을 설정하기 위한 함수
+
+			[model].compile(optimizer, loss)
+
+			optimizer : 모델 학습 최적화 방법(GD -> SGD -> Momentum -> Adam, 각자의 장단점이 있어 상황에 맞춰 사용)
+
+			loss : 손실 함수 설정(회귀 : MSE, 분류 : Cross Entropy)
+
+		ㄴ) 모델을 학습시키기 위한 함수
+
+			[model].fit(x, y)
+
+		ex) model.compile(loss='mean_squared_error', optimaizer='SGD') # MSE를 loss로 설정, 최적화 방식은 SGD
+
+		     model.fit(dataset, epochs=100) # dataset에 저장된 데이터를 입력하고 epochs을 100으로 설정하고 학습
+
+	iv) 평가 및 예측하기
+
+		ㄱ) 모델을 평가하기 위한 메소드
+
+			[model].evaluate(x, y) 
+
+			x : 테스트 데이터 , y : 테스트 데이터의 label
+
+		ㄴ) 모델로 예측을 수행하기 위한 함수
+
+			[model].predict(x)
+
+			x : 예측하고자 하는 데이터
+
+		ex) model.evaluate(X_test, Y_test)
+
+		     predicted_labels_test = model.predict(X_test)
+
+
+
+		    
+
+	
+		
+
+		
+		   
+
+		      
+
+
+
+
+	
+
+
+
 
 	
