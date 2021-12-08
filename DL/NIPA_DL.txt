@@ -195,7 +195,7 @@
 
 - 유연하고, 효율적이며, 확장성 있는 딥러닝 프레임워크
 
-- 대형 클러스터 컴퓨터부터 스마트폰까지 다양한 디바이스에서 동작 가능\
+- 대형 클러스터 컴퓨터부터 스마트폰까지 다양한 디바이스에서 동작 가능
 
 - 딥러닝 모델 구현 순서
 
@@ -303,6 +303,296 @@
 		ex) model.evaluate(X_test, Y_test)
 
 		     predicted_labels_test = model.predict(X_test)
+
+-----------------------------------------------------------------------------------------------------------------------------------
+
+이미지 처리를 위한 데이터 전처리
+
+- 우리 주변의 이미지 처리 기술 예시
+
+	ex) 얼굴 인식 카메라, 화질 개선(Super Resolution), 이미지 자동 태깅
+
+- 이미지 데이터는 우리가 기존까지 다뤘던 데이터 프레임 형태의 정형화된 데이터와는 다른 비정형 데이터임
+
+- 컴퓨터에게 이미지는 각 픽셀 값을 가진 숫자 배열로 인식 
+
+	ex) 255, 255, 56, 88
+
+- 이미지 전처리 하기
+
+	i) 모두 같은 크기를 갖는 이미지로 통일 
+
+		ㄱ) 가로 세로 픽셀 사이즈를 표현하는 해상도 통일  -> HD, FHD, 1280p,,
+
+		ㄴ) 색을 표현하는 방식 통일 -> RGB, HSV, Gray-scale
+
+		∴  원본 이미지 -> 해상도 변환 -> 색 표현 변환 -> MNIST 데이터(손 글씨로 된 사진을 모아둔 데이터)
+
+	
+	ii) CNN을 위한 전처리
+
+		ㄱ) MNIST 데이터는 이미지 데이터지만 가로 길이와 세로 길이만 존재하는 2차원 데이터
+
+		ㄴ) CNN 모델은 채널(RGB 혹은 흑백)까지 고려한 3차원 데이터를 입력으로 받기에 채널 차원을 추가해 데이터 모양(shape)을 바꿔줘야함
+
+		ㄷ) [데이터 수, 가로 길이, 세로 길이] -> [데이터 수, 가로 길이, 세로 길이, 채널 수] 
+
+		ㄹ) 차원 추가 함수 = tf.expand_dims(data, axis), 마지막 축(axis)에 해당하는 곳에 차원 하나를 추가할 수 있는 코드, 3 = 채널 수 3
+
+						        -1을 넣으면 어떤 data가 들어오던 마지막 축의 index를 의미
+
+-----------------------------------------------------------------------------------------------------------------------------------
+
+이미지 처리를 위한 딥러닝 모델 
+
+- 기존 다층 퍼셉트론 기반 신경망의 이미지 처리 방식
+
+	i) 고양이 사진을 신경망에 넣는다고 가정해보자
+
+	ii) 6X6 픽셀의 이미지라고 할 때 2차원 6X6 배열로 정의가 됨
+
+	iii) 신경망에 넣기 위해선 1차원으로 정의를 해줘야 함 -> (1,6) (2,6) ... (6,6) 순차적으로 넣어 (36, )으로 바꿔줌 
+
+	iv) HD사이즈 경우 극도로 많은 수의 파라미터가 필요, 또는 만약 좌우 반전, 색상 변경과 같은 이미지 변화가 있다면 같은 고양이더라도 다르게 인식하게 됨
+
+	v) 기존의 신경망으로도 분류를 할 수 있지만 높은 픽셀일 경우 극도로 많은 수의 파라미터 필요, 좌우 반전과 같은 이미지 변화에 따른 데이터 변화가 심해 효율성이 떨어진다고 볼 수 있음
+
+- 합성곱 신경망(Convolution Neural Network, CNN)
+
+	i) 작은 필터를 순환시키는 방식으로 이미지의 패턴이 아닌 "특징"을 중심으로 인식, 픽셀 단위 X
+
+		ex) 귀, 코, 수염, 꼬리
+
+- CNN의 구조
+
+	i) 입력 이미지의 특징을 추출, 분류하는 과정으로 동작
+
+	ii) 고양이 사진 -> [Convolution Layer -> Pooling Layer] -> Fully-Connected Layer
+				      
+				CNN 		          FC(노드들이 모두 연결됨을 의미, Dense Layer)
+				  
+			          귀, 코, 수염		                분류
+
+	
+	iii) Convolution Layer : 이미지에서 어떠한 특징이 있는지를 구하는 과정
+
+			   필터가 이미지를 이동하며 새로운 이미지(피쳐맵)를 생성
+
+			   과정 : 고양이 특징 중 하나인 귀를 선택해 필터를 만듦(ex. 3X3) -> 필터가 이미지(ex. 9X9)를 꼼꼼히 이동하며 제일 비슷한 구간의 값을 피쳐맵에 "크게" 표시함
+				
+			            -> 비슷하지 않은 구간엔 피쳐맵에 "작게" 표시 -> 최종적인 피쳐맵에서 어떤 부분에 귀가 있고 없는지를 확인할 수 있음
+
+			    ∴ 수 많은 필터들을 만들어 피쳐맵을 만들 수 있음, 피쳐맵은 필터와 유사한 구간을 찾아내고 위치가 표시함
+
+				ㄱ) 피쳐맵의 크기 변형 : Padding, Striding
+
+					- 필터를 적용하면 원본 이미지의 일부만 나오게 됨, 피쳐맵이 원본 사이즈보다 작게됨
+
+					- 원본 사이즈랑 같게끔 나오게 하기 위해서 Padding, 원본이미지의 상하좌우에 한 줄씩 추가함
+
+					- Striding, 필터를 이동시키는 거리를 설정함 
+
+
+	iv) Pooling Layer : 이미지의 왜곡의 영향(노이즈)를 축소하는 과정,  4X4 -> 2X2
+
+		           ㄱ) Max Pooling : 각 구간의 대표하는 max 값만을 골라 축소
+
+		           ㄴ) Average Pooling : 각 구간의 평균값을 구해 축소
+
+	
+
+- Fully-Connected Layer : 추출된 특징을 사용하여 이미지를 분류
+
+	CNN을 통해 원래 원본 이미지가 특징들이 추가된 피쳐맵이 만들어짐
+
+	ex) 귀 피쳐맵, 입 피쳐맵 ,,,,
+
+	피쳐맵 값들을 다시 1차원 배열로 만듦, [귀, 입, 수염,,,]
+
+
+ 	i) 분류를 위한 Softmax 활성화 함수
+
+		귀 일 확률           	a
+	
+		입 일 확률	      -> 	b    ->  a + b + c = 1,  a + b + c <=0
+
+		수염 일 확률        	c
+
+- 정리 
+
+	합성곱(특징) -> 풀링(사이즈, 노이즈) -> 활성함수
+
+	Convolution Layer는 특징을 찾아내고, Pooling Layer는 처리할 맵(이미지) 크기를 줄여줌
+
+	이를 N번 반복한다 -> 귀 피쳐맵 안에서도 고양이 귀만의 특징을 또 찾아냄
+
+	반복할 때마다 줄어든 영역에서의 특징을 찾게 되고, 영역의 크기는 작아졌기 때문에 빠른 학습이 가능
+
+
+- CNN 기반 다양한 이미지 처리 기술
+
+	Object detection & segmentation - 물체들 각각을 파악함
+
+	Super resolution(SR) - 해상도가 낮은 이미지를 높임
+
+
+
+
+	1. CNN 레이어 : 입력 이미지의 특징, 즉 처리할 특징 맵(map)을 추출하는 레이어임, tf.keras.layers.Conv2D(filters, kernel_size, activation, padding)
+
+		       					filters : 필터(커널) 개수, kernel_size : 필터(커널)의 크기, activation : 활성화 함수
+							padding : 이미지가 필터를 거칠 때 그 크기가 줄어드는 것을 방지하기 위해서 가장자리에 0의 값을 가지는 픽셀을 넣을 것인지 말 것인지를 결정하는 변수, ‘SAME’ 또는 ‘VALID’
+
+	
+	2. Flatten 레이어 : Convolution layer 또는 MaxPooling layer의 결과는 N차원의 텐서 형태, 이를 1차원으로 평평하게 만들어줌, tf.keras.layers.Flatten()
+
+
+	3. Dense 레이어 : tf.keras.layers.Dense(node, activation), node : 노드(뉴런) 개수activation : 활성화 함수
+
+<모델 구현>
+		import numpy as np
+		import tensorflow as tf
+		import matplotlib.pyplot as plt
+		from visual import *
+		import logging, os
+		logging.disable(logging.WARNING)
+		os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
+
+		# 동일한 실행 결과 확인을 위한 코드입니다.
+		np.random.seed(123)
+		tf.random.set_seed(123)
+
+
+		# MNIST 데이터 세트를 불러옵니다.
+		mnist = tf.keras.datasets.mnist
+
+		# MNIST 데이터 세트를 Train set과 Test set으로 나누어 줍니다.
+		(train_images, train_labels), (test_images, test_labels) = mnist.load_data()    
+
+		# Train 데이터 5000개와 Test 데이터 1000개를 사용합니다.
+		train_images, train_labels = train_images[:5000], train_labels[:5000]
+		test_images, test_labels = test_images[:1000], test_labels[:1000]
+
+		# CNN 모델의 입력으로 사용할 수 있도록 (샘플개수, 가로픽셀, 세로픽셀, 1) 형태로 변환합니다.
+		train_images = tf.expand_dims(train_images, -1)
+		test_images = tf.expand_dims(test_images, -1)
+
+
+		"""
+		1. CNN 모델을 설정합니다.
+   		분류 모델에 맞게 마지막 레이어의 노드 수는 10개, activation 함수는 'softmax'로 설정합니다.
+		"""
+		model = tf.keras.Sequential([
+    			tf.keras.layers.Conv2D(filters = 32, kernel_size = (3,3), activation = 'relu', padding = 'SAME', input_shape = (28,28,1)),
+    			tf.keras.layers.MaxPool2D(padding = 'SAME'),
+    			tf.keras.layers.Conv2D(filters = 32, kernel_size = (3,3), activation = 'relu', padding = 'SAME'),
+    			tf.keras.layers.MaxPool2D(padding = 'SAME'),
+    			tf.keras.layers.Conv2D(filters = 32, kernel_size = (3,3), activation = 'relu', padding = 'SAME'),
+   			tf.keras.layers.MaxPool2D(padding = 'SAME'),
+    			tf.keras.layers.Flatten(),
+    			tf.keras.layers.Dense(64, activation = 'relu'),
+    			tf.keras.layers.Dense(10, activation = 'softmax')
+			])
+
+		# CNN 모델 구조를 출력합니다.
+		print(model.summary())
+
+		# CNN 모델의 학습 방법을 설정합니다.
+		model.compile(loss = 'sparse_categorical_crossentropy',
+             		 		optimizer = 'adam',
+              			metrics = ['accuracy'])
+              
+		# 학습을 수행합니다. 
+		history = model.fit(train_images, train_labels, epochs = 20, batch_size = 512)
+
+		# 학습 결과를 출력합니다.
+		Visulaize([('CNN', history)], 'loss')
+
+
+< MNIST 분류 CNN 모델 평가 및 예측> 
+		
+		import numpy as np
+		import tensorflow as tf
+		import matplotlib.pyplot as plt
+		from visual import *
+		from plotter import *
+
+		import logging, os
+		logging.disable(logging.WARNING)
+		os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
+
+		# 동일한 실행 결과 확인을 위한 코드입니다.
+		np.random.seed(123)
+		tf.random.set_seed(123)
+
+
+		# MNIST 데이터 세트를 불러옵니다.
+		mnist = tf.keras.datasets.mnist
+
+		# MNIST 데이터 세트를 Train set과 Test set으로 나누어 줍니다.
+		(train_images, train_labels), (test_images, test_labels) = mnist.load_data()    
+
+		# Train 데이터 5000개와 Test 데이터 1000개를 사용합니다.
+		train_images, train_labels = train_images[:5000], train_labels[:5000]
+		test_images, test_labels = test_images[:1000], test_labels[:1000]
+
+		# CNN 모델의 입력으로 사용할 수 있도록 (샘플개수, 가로픽셀, 세로픽셀, 1) 형태로 변환합니다.
+		train_images = tf.expand_dims(train_images, -1)
+		test_images = tf.expand_dims(test_images, -1)
+
+
+		# CNN 모델을 설정합니다.
+		model = tf.keras.Sequential([
+    			tf.keras.layers.Conv2D(filters = 32, kernel_size = (3,3), activation = 'relu', padding = 'SAME', input_shape = (28,28,1)),
+    			tf.keras.layers.MaxPool2D(padding = 'SAME'),
+    			tf.keras.layers.Conv2D(filters = 32, kernel_size = (3,3), activation = 'relu', padding = 'SAME'),
+    			tf.keras.layers.MaxPool2D(padding = 'SAME'),
+    			tf.keras.layers.Conv2D(filters = 32, kernel_size = (3,3), activation = 'relu', padding = 'SAME'),
+    			tf.keras.layers.MaxPool2D(padding = 'SAME'),
+    			tf.keras.layers.Flatten(),
+    			tf.keras.layers.Dense(64, activation = 'relu'),
+    			tf.keras.layers.Dense(10, activation = 'softmax')
+			])
+
+		# CNN 모델 구조를 출력합니다.
+		print(model.summary())
+
+		# CNN 모델의 학습 방법을 설정합니다.
+		model.compile(loss = 'sparse_categorical_crossentropy',
+              		optimizer = 'adam',
+              		metrics = ['accuracy'])
+              
+		# 학습을 수행합니다. 
+		history = model.fit(train_images, train_labels, epochs = 10, batch_size = 128, verbose = 2)
+
+		Visulaize([('CNN', history)], 'loss')
+
+		"""
+		1. 평가용 데이터를 활용하여 모델을 평가합니다.
+   		loss와 accuracy를 계산하고 loss, test_acc에 저장합니다.
+		"""
+		loss, test_acc = model.evaluate(test_images, test_labels, verbose = 0)
+
+		"""
+		2. 평가용 데이터에 대한 예측 결과를 predictions에 저장합니다.
+		"""
+		predictions = model.predict_classes(test_images)
+
+		# 모델 평가 및 예측 결과를 출력합니다.
+		print('\nTest Loss : {:.4f} | Test Accuracy : {}'.format(loss, test_acc))
+		print('예측한 Test Data 클래스 : ',predictions[:10])
+
+		# 평가용 데이터에 대한 레이어 결과를 시각화합니다.
+		Plotter(test_images, model)
+
+		 				
+
+					
+
+
+			     
+
+
 
 
 
