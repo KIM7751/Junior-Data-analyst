@@ -585,6 +585,202 @@
 		# 평가용 데이터에 대한 레이어 결과를 시각화합니다.
 		Plotter(test_images, model)
 
+-----------------------------------------------------------------------------------------------------------------------------------
+
+자연어 처리를 위한 데이터 전처리
+
+- 우리 주변의 자연어 처리 예시
+
+	ex) 기계 번역 모델, 음성 인식
+
+- 자연어 처리 과정
+
+	1) 자연어 전 처리(Preprocessing)
+
+		i) 정의 : 원 상태 그대로의 자연어는 전처리 과정이 필요함
+
+			ㄱ) 노이즈 캔슬링(Noise canceling) : 오류 교정, 자연어 문장의 스펠링 체크 및 띄어쓰기 오류 교정
+
+				ex) 안녕하 세요. 반갑스니다. -> 안녕하세요. 반갑습니다
+
+			ㄴ) 토크나이징(Tokenizing) : 토큰화, 문장을 토큰으로 나눔, 토큰은 어절, 단어 등으로 목적에 따라 다르게 정의
+
+				ex) 딥러닝 기초 과목을 수강하고 있습니다 -> ["딥", "러닝", "기초", "과목", "을", "수강", "하고", "있습니다", "."]
+
+			ㄷ) 스탑 워드 리무버(StopWord removal) : 불용어 제거, 불필요한 단어를 의미하는 불용어 제거
+
+				ex) 아, 휴, 아이구, 아이쿠, 아이고, 쉿, 그렇지 않으면, 그러나, 그런데, 하지만, ...
+
+			ㄹ) 백 오브 워드(Back of Words) : 수치형 변환(인덱스 부여), 자연어 데이터에 속해있는 단어들의 가방
+
+				ex) ['안녕', '만나서', '반가워'] ['안녕', '나도', '반가워'] -> ['안녕':0, '만나서':1, '반가워':2, '나도':3]
+
+			ㅁ) 토큰 시퀀스(Token sequence) : 백 오브 워드에서 단어에 해당되는 인덱스로 변환, 모든 문장의 길이를 맞추기 위해 기준보다 짧은 문장에는 "패딩" 수행
+
+				ex) ['안녕', '만나서', '반가워'] ['나도', '만나서', '반가워'] ['만나서', '반가워', '안녕'] ['안녕', '반가워'] -> [0, 1, 2] [3, 1, 2] [1, 2, 0] [0, 2, 4(padding)]
+
+				     sequence.pad_sequences(data, maxlen=300, padding='post') data 시퀀스의 크기가 maxlen 인자보다 작으면 그 크기에 맞게 패딩을 추가함
+
+	2) 단어 표현(Word Embedding)
+
+		i) 정의 : 단순하게 Bag of Words의 인덱스로 정의된 토큰들에게 의미를 부여하는 방식
+
+		           Why ? -> Bag of Words는 해당되는 토큰에 대한 "의미"가 아닌 "순서"임, 따라서 "의미를 갖는 값"으로 변환하는 것 -> 토큰의 특징 설명할 때 "벡터"를 사용 -> 유사도 판단, 연산 가능(단어들간 연관성)
+
+				ex) Bag of Words : ['어머니' : 0, '아버지' : 1, '친구' : 2, '회사' : 3] 
+
+				     -> Embedding table  0 : [1, 3, 0, -2, 0, 0], 1 : [2, 2, 0, -1, 0, 0], 2 : [0, 0, 1, -1, -2, 0], 3 : [0, -1, 0, 0, -1, 3] "벡터" 사용
+			
+
+	3) 모델 적용하기(Modeling)
+
+		i) 임베딩 후에 기존 다층 퍼셉트론 신경망에 넣는다고 할때 이전에 이미지 픽셀 2차원을 1차원으로 전환해 넣었던 방식처럼 2차원 배열을 1차원 배열화 시켜야 함
+
+		   하지만 1차원 배열화 과정에서 2차원 배열 대괄호가 없어지면서 단어들 간 특징, 순서관계가 훼손됨, 임베딩한 이유가 없어짐 -> 기존 MLP(Multi-Layer Perceptron) 적용시키기에는 한계
+
+
+- 자연어 분류를 위한 순환 신경망(Recurrent Neural Network)
+
+	i) 기존 퍼셉트론 계산과 비슷하게 X 입력 데이터를 받아 Y를 출력
+
+		ex) X = 임베딩된 배열 
+
+
+- RNN의 구조
+
+	i) 출력값을 두 갈래로 나뉘어 신경망에게 '기억' 하는 기능을 부여
+
+		ex) '안녕' -> 임베딩 [ 1, 3, 2] = X -> RNN -> Y, h라는 값을 만듦
+
+		     h는 안녕을 통해서 만들어진 값, 안녕에 대한 정보가 포함
+
+		     '만나서' 두번째 토큰 벡터가 들어가 Y 값이 출력 될때 h 값 같이 들어감
+
+	ii) 전에 사용했던 토큰에 대한 기억을 다음 토큰 계산에 사용함
+
+	iii) 중요한 것은 최종적으로 문장이 끝나는 토근의 Y 값이 제일 중요하며 손실함수 계산 
+
+- 정리 
+
+	임베딩(특징) -> RNN -> 활성함수
+
+	임베딩은 토큰의 특징을 찾아내고 RNN 이 전 토큰의 영향을 받으며 학습함
+
+	Multi class -> Softmax
+
+	Binary class -> sigmoid
+
+
+- RNN 기반 다양한 자연어 처리 기술
+
+	Image captioning - CNN 특징 분류 -> RNN -> Label
+
+	Chat bot - 자연어 to 자연어 
+
+	RNN -> LSTM, GRU.. 모델 발전  
+
+	
+	1. Embedding 레이어 : 들어온 문장을 단어 임베딩(embedding)하는 레이어, tf.keras.layers.Embedding(input_dim, output_dim, input_length)
+
+								 input_dim: 들어올 단어의 개수, output_dim: 결과로 나올 임베딩 벡터의 크기(차원)_
+                                                                                                            input_length: 들어오는 단어 벡터의 크기
+
+	2. RNN 레이어 : 단순 RNN 레이어, tf.keras.layers.SimpleRNN(units)
+	
+		                               units: 레이어의 노드 수
+
+
+<모델 학습> - 일반적으로 RNN 모델은 입력층으로 Embedding 레이어를 먼저 쌓고, RNN 레이어를 몇 개 쌓은 다음, 이후 Dense 레이어를 더 쌓아 완성함
+
+	import json
+	import numpy as np
+	import tensorflow as tf
+	import data_process
+	from keras.datasets import imdb
+	from keras.preprocessing import sequence
+
+	import logging, os
+	logging.disable(logging.WARNING)
+	os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
+
+	# 동일한 실행 결과 확인을 위한 코드입니다.
+	np.random.seed(123)
+	tf.random.set_seed(123)
+
+	# 학습용 및 평가용 데이터를 불러오고 샘플 문장을 출력합니다.
+	X_train, y_train, X_test, y_test = data_process.imdb_data_load()
+
+	max_review_length = 300
+
+	# 패딩을 수행합니다.
+	X_train = sequence.pad_sequences(X_train, maxlen=max_review_length, padding='post')
+	X_test = sequence.pad_sequences(X_test, maxlen=max_review_length, padding='post')
+
+
+	embedding_vector_length = 32
+
+	"""
+	1. 모델을 구현합니다.
+	   임베딩 레이어 다음으로 `SimpleRNN`을 사용하여 RNN 레이어를 쌓고 노드의 개수는 5개로 설정합니다. 
+	   Dense 레이어는 0, 1 분류이기에 노드를 1개로 하고 activation을 'sigmoid'로 설정되어 있습니다.
+	"""
+	model = tf.keras.models.Sequential([
+	    tf.keras.layers.Embedding(1000, embedding_vector_length, input_length = max_review_length),
+	    tf.keras.layers.SimpleRNN(5),
+	    tf.keras.layers.Dense(1, activation='sigmoid')
+	    ])
+
+	# 모델을 확인합니다.
+	print(model.summary())
+
+	# 학습 방법을 설정합니다.
+	model.compile(loss = 'binary_crossentropy', optimizer = 'adam', metrics = ['accuracy'])
+
+	# 학습을 수행합니다.
+	model_history = model.fit(X_train, y_train, epochs = 3, verbose = 2)
+
+
+<모델 평가 및 예측>
+
+	1. model.evaluate(X, Y) : 학습된 모델을 바탕으로 입력한 feature 데이터 X와 label Y의 loss 값과 metrics 값을 출력
+
+	2. model.predict(X) : X 데이터의 예측 label 값을 출력
+	
+	# 모델을 확인합니다.
+	print(model.summary())
+
+	# 학습 방법을 설정합니다.
+	model.compile(loss = 'binary_crossentropy', optimizer = 'adam', metrics = ['accuracy'])
+
+	# 학습을 수행합니다.
+	model_history = model.fit(X_train, y_train, epochs = 5, verbose = 2)
+
+	"""
+	1. 평가용 데이터를 활용하여 모델을 평가합니다.
+ 	loss와 accuracy를 계산하고 loss, test_acc에 저장합니다.
+	"""
+	loss, test_acc = model.evaluate(X_test, y_test, verbose = 0)
+
+	"""
+	2. 평가용 데이터에 대한 예측 결과를 predictions에 저장합니다.
+	"""
+	predictions = model.predict(X_test)
+
+	# 모델 평가 및 예측 결과를 출력합니다.
+	print('\nTest Loss : {:.4f} | Test Accuracy : {}'.format(loss, test_acc))
+	print('예측한 Test Data 클래스 : ',1 if predictions[0]>=0.5 else 0)
+
+
+
+	
+
+	
+
+
+
+
+		
+
 		 				
 
 					
