@@ -20,7 +20,15 @@
         for (var key in coworkers) {
             document.write(key + " : " + coworkers[key] + "<br>");
         }
-
+    </script>
+    <h2>Property & Method</h2>
+    <script>
+        coworkers.showAll = function() {
+            for (key in this) {
+                document.write(key + " : " + this[key] + "<br>")
+            }
+        }
+        coworkers.showAll();
     </script>
 </head>
 <body>
