@@ -95,7 +95,7 @@ UI = User Interface
 -------------------------------------------------------------------------------------------------------------------------------
 
 
-API = Application Programming Interface
+API  = Application Programming Interface
 
 1. 인터넷 익스플로어 주소창에 javascript:alert("hello"); 를 작성하고 엔터를 누르면 hello 문구가 적힌 팝업창, UI를 볼 수 있음
 
