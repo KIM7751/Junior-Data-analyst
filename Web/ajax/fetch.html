@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+    <article>
+
+    </article>
+    <input type="button" value="fetch" onclick="
+    // fetch('html').then(function(response){
+    //     response.text().then(function(text){
+    //         document.querySelector('article').innerHTML = text;
+    //     })
+    // })
+    function callbackme(){
+        console.log('end response')
+    }
+    fetch('html').then(callbackme);
+    console.log('1');
+    console.log('2');
+    ">
+</body>
+</html>
