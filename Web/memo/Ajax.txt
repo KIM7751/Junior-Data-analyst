@@ -242,4 +242,88 @@ fetch API 요청과 응답
 
 26. 병렬적이라고도 할 수 있음
 
-27. ajax의 a에 해당하는 약자이기도 함  
+27. ajax의 a에 해당하는 약자이기도 함 
+
+----------------------------------------------------------------------------------------------------------------------
+
+fetch API response 객체
+
+1. 이전에 작성했던 코드를 보면 then 안에 function이 들어간 괴상한 모양을 하고 있음 
+
+2. 저걸 "익명 함수" 라고 부름 
+
+3. 우리가 만든 callbackme 함수는 이름이 있음
+
+4. 함수가 이름이 필요한 경우는 여기저기서 부를 때 필요함 
+
+5. 하지만 여기서 익명 함수는 then에서만 독점적으로 사용할 것이기 때문에 이름을 가질 필요가 없는 것 
+
+6. 예를 들어보자 
+
+	fuction callbackme(){
+	console.log('response end');
+	}
+
+	callbackme = function(){
+	console.log('reponse end');
+
+7. 이 둘은 같은 뜻을 의미함
+
+	fetch('html').then(callbackme);
+	
+	fetch('html').then(function(){
+	console.log('response end');
+
+8. 익명 함수를 이렇게 사용할 수 있음 
+
+9. fetch API 사용설명서를 잘 보면 then에 callback 함수를 주게 되면 
+
+10. callback 함수가 fetch API를 실행시킬때 저 함수의 첫 번째 인자 값으로 response객체를 주겠습니다라고 적혀있음
+
+	fetch('html').then(function(response){
+	console.log(response);
+	});
+	console.log('1');
+	console.log('2');
+
+11. 여기서 인자 값의 이름은 아무렇게나 해도 상관없으나 이 함수가 호출될때 response 객체라고 하는 어떤 입력값으로 주면서 호출할 것이다라고 설명서에 적혀있음
+
+12. 그러면 도대체 response라는 것 안에 어떤 내용이 들어있는가를 console.log를 통해 찍어보자 
+
+13. log를 살펴보면 response라는 객체의 여러 속성값들이 있는데 status가 200이라고 나와 있음 
+
+14. 웹 브라우저와 웹 서버가 통신을 할 때 웹 서버가 응답을 하면서 파일을 잘 찾았다고하면 
+
+15. 200이라고 알려줌 성공이란 뜻임 
+
+16. 요청한 파일이 존재하지 않을때 404를 던짐 not found 찾을 수 없다는 의미임
+
+17. 정리하자면 우리가 html을 요청했고 잘 응답을 받았기 때문에 서버가 200을 알려줬는데 
+
+18. response라는 객체의 status 라는 속성에 값이 200인 것임 
+
+19. 존재하지 않는 파일을 넣을때와 비교해보자 
+
+20. 없는 파일 js를 요청했고 웹 서버가 없으니 404라는 메세지를 브라우저에 보냄 
+
+21. status만 어떻게 가져오냐라고 하면 
+
+	fetch('js').then(function(response){
+	console.log(reponse.status);
+	});
+	console.log('1');
+	console.log('2');
+
+22. response 객체의 status 값만 가져옴, 응용하면 경고창 띄우는 것도 가능함 
+
+	fetch('js').then(function(response){
+	if(response.status == '404'){
+	   alert('Not found')
+	}
+	});
+	console.log('1');
+	console.log('2');
+
+23. response라는 객체는 fetch를 통해서 요청을 했을때 웹 서버가 응답한 그 결과를 담고 있는 객체 데이터가
+
+24. response라는 것이고 그 안에는 여러가지 속성이 있으며 서버랑 통신할때 어떤 통신이 이루어졌는지를 알 수 있는 귀중한 단서임 

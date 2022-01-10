@@ -1,0 +1,31 @@
+패키지(packages)
+
+패키지는 도트(.)를 사용하여 파이썬 모듈을 계층적(디렉터리 구조)으로 관리할 수 있게 해줌
+예를 들어 모듈 이름이 A.B인 경우에 A는 패키지 이름이 되고 B는 A 패키지의 B모듈이 됨
+
+	game/
+   		 __init__.py
+   		 sound/
+    	    		__init__.py
+     	  		echo.py
+      	  		wav.py
+    		graphic/
+     	   		__init__.py
+     	   		screen.py
+      	  		render.py
+   	 	play/
+       	 		__init__.py
+       	 		run.py
+        			test.py
+
+game, sound, graphic, play는 디렉터리이고 확장자가 .py인 파일은 파이썬 모듈
+game 디렉터리가 이 패키지의 루트 디렉터리이고 sound, graphic, play는 서브 디렉터리
+
+
+__init__.py
+
+python이 디렉터리가 패키지를 담고 있는 것처럼 다루려면 __init__ 파일이 필요함
+string 같은 일반적인 이름으로 된 폴더가 유효한 모듈인데 의도치 않게 
+모듈 검색 경로에서의도치 않게 숨겨지는 일을 막는데 필요함
+가장 간단한 상황에서는 아무 내용도 없는 __init__.py를 만들어도 되지만 이 파일에서 
+패키지의 초기화 코드를 실행하거나 __all__ 변수를 설정할 수 있음 

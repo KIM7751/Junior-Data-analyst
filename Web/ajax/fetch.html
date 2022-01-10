@@ -12,12 +12,29 @@
     //         document.querySelector('article').innerHTML = text;
     //     })
     // })
-    function callbackme(){
-        console.log('end response')
-    }
-    fetch('html').then(callbackme);
-    console.log('1');
-    console.log('2');
+    
+    // function callbackme(){
+    //     console.log('end response')
+    // }
+    // fetch('html').then(callbackme);
+    // console.log('1');
+    // console.log('2');
+    // 
+    //    callbackme = function(){
+    //        console.log('end response');
+    //    }
+
+    //    fetch('html').then(function(response){
+    //            console.log(response);
+    //    })
+    //    console.log('1');
+    //    console.log('2');
+
+       fetch('js').then(function(response){
+           if(response.status == '404') {
+               alert('not found');
+           }
+       })
     ">
 </body>
 </html>
