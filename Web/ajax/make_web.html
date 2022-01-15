@@ -17,9 +17,9 @@
         <div id = "grid">
         
         <ol>
-            <li><a onclick="fetchPage('html')">HTML</a></li>
-            <li><a onclick="fetchPage('css')">CSS</a></li>
-            <li><a onclick="fetchPage('javascript')">JavaScript</a></li>        
+            <li><a href="#!html" onclick="fetchPage('html')">HTML</a></li>
+            <li><a href="#!css" onclick="fetchPage('css')">CSS</a></li>
+            <li><a href="#!javascript" onclick="fetchPage('javascript')">JavaScript</a></li>        
         </ol>
         
             <!-- more page -->
@@ -80,6 +80,12 @@
                 document.querySelector('article').innerHTML = text;
             })
         })
+    }
+
+    if(location.hash){
+        fetchPage(location.hash.substring(2))
+    } else {
+
     }
 </script>
 <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
