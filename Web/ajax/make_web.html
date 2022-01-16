@@ -14,12 +14,10 @@
         <input type="button" value="night" onclick="
         nightDayhandler(this)">
 
-        <div id = "grid">
+        <div id="grid">
         
-        <ol>
-            <li><a href="#!html" onclick="fetchPage('html')">HTML</a></li>
-            <li><a href="#!css" onclick="fetchPage('css')">CSS</a></li>
-            <li><a href="#!javascript" onclick="fetchPage('javascript')">JavaScript</a></li>        
+        <ol id="nav">
+               
         </ol>
         
             <!-- more page -->
@@ -87,6 +85,12 @@
     } else {
 
     }
+
+    fetch('list').then(function(response) {
+        response.text().then(function(text) {
+            document.querySelector('#nav').innerHTML = text;
+        })
+    })
 </script>
 <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </p>
