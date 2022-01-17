@@ -505,7 +505,7 @@ fragment identifier를 이용한 초기 페이지 기능 구현
  
 ----------------------------------------------------------------------------------------------------------------------
 
-데이터와 애플리케이션(로직) 구분하여 구현하기
+데이터와 애플리케이션(로직) 구분하여 구현하기 1
 
 1. 프로그래머들은 데이터와 애플리케이션을 구분함 
 
@@ -554,6 +554,105 @@ fragment identifier를 이용한 초기 페이지 기능 구현
 18. 컨텐츠 입력을 어디에 어떻게 해야하는가 또는 실수로 다른 부분을 망가뜨리진않을까라는 고민에서 자유로울 수 있음 
 
 19. 이렇게 데이터와 애플리케이션을 구분해 ajax를 활용한 구현을 진행함
+
+----------------------------------------------------------------------------------------------------------------------
+
+데이터와 애플리케이션(로직) 구분하여 구현하기 2
+
+1. 분리한 데이터들의 모음 list 파일을 살펴보면 중복이 있음을 알 수 있음
+	
+	list file
+	<li><a href= ~	
+
+2. 중복들을 다 없애버리고 컴팩트하게 본질만 남기려면 어떻게 해야할까?
+
+	list file
+	html, css, javascript, ajax
+
+3. 결론부터 이야기하자면 list file에서 위와 같이 나열된 문자들에 대해서
+
+4. 콤마를 구분자로 각각에 데이터를 하나씩 불러와 sctipt 태그 안에 innerHTML 처리 하면됨
+
+	fetch('list').then(function(response){
+	response.text().then(function(text){
+	console.log(text);
+
+	html, css, javascript
+
+5. 위와 같이 log를 찍어보면 list 파일 안에 텍스트가 호출됨 
+
+6. 여기서 생각해보자 데이터 문자열을 뭐로 바꾸면 편할까?
+
+7. 반복적인 작업을 할때 세트로 가족처럼 쓰는 것이 "배열"이였음
+
+8. 콤마를 기준으로 각각 항목들을 원소로하는 배열을 만들 수 있다면
+
+9. 우리는 배열에 담겨있는 데이터를 반복문에 따라 하나씩 꺼내서 사용가능함
+
+10. 그때 사용하는 것이 "split"임
+
+	var items = text.split(",")
+
+11. 텍스트에 있는 문자열을 콤마를 기준으로 해서 하나하나 쪼개서 배열을 만드는 표현식임
+
+	console.log(items);
+
+12. log를 확인해보면 ['html', 'css', 'javascript', 'ajax'] 배열로 출력됨
+
+13. 배열을 만들었으니 반복문이 사용가능함 
+
+	fetch.('list').then(function(response){
+	response.text().then.(function(text){
+	
+	var items = text.split(",");
+	var i = 0;
+	while (i < items.length) {
+		var item = items[i]
+		console.log(item);
+		i += 1;
+		}
+	document.querySelector("#nav").innerHTML = text;
+		})
+	})
+
+14. html 태그도 넣어 만들어보자
+
+	fetch.('list').then(function(response){
+	response.text().then.(function(text){
+	
+	var items = text.split(",");
+	var i = 0;
+		while (i < items.length) {
+		var item = items[i]
+		var tag = '<li><a>'+item+'</li></a>'
+		i += 1;
+		}
+	document.querySelector("#nav").innerHTML = text;
+		})
+	})
+
+15. list 모습까지 갖추려면 빈 문자열이 필요함, 왜냐하면 반복문으로 태그를 넣어 만든 문자열을 보존하기 위해서임
+
+16. 만약 빈 문자열이 없다면 반복문의 맨 마지막 값만 남게됨 
+
+17. 한마디로 담는 그릇이라고 보면됨
+	
+	fetch.('list').then(function(response){
+	response.text().then.(function(text){
+	
+		var items = text.split(",");
+		var i = 0;
+		var tags = ' ';
+		while (i < items.length) {
+		var item = items[i]
+		var tag = '<li><a>'+item+'</li></a>'
+		tags = tags + tag
+		i += 1;
+		}
+	console.log(tags);
+	document.querySelector("#nav").innerHTML = tags;
+		})
+	})
 
   
 
