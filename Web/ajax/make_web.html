@@ -94,19 +94,22 @@
              while(i < items.length) {
                 
                 var item = items[i];  
-                // console.log(item)
+                // console.log(items)
+                item = item.trim();
+                // 줄바꿈으로 생기는 오류를 해결함    
 
-                var tag = '<li><a>' + item + '</a></li>'
+                var tag = '<li><a href="#!' + item + '" onclick= "fetchPage(\'' + item + '\')">' 
+                    + item + '</a></li>';               
                 // console.log(tag)
 
-                tags = tags + tag
+                tags = tags + tag;
                 i+=1; 
              }
              console.log(tags)
             // console.log(items);
             document.querySelector('#nav').innerHTML = tags;
         })
-    })
+    });
 </script>
 <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </p>
